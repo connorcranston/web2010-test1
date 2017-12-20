@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+</head>
+<body>
+
+<table style="width:80%">
+  <tr>
+      <th></th>
+    <th>Bitcoin</th>
+    <th>BTC/USD</th>
+    <th>BTC/EUR</th>
+    <th>BTC/GBP</th>
+    <th>BTC/JPY</th>
+    <th>BTC/CAD</th>
+  </tr>
+  <tr>
+    <td>Prices</td>
+  </tr>
+</table>
+
+<input type="button" value="Refresh" onClick="window.location.reload()">
+<input type="button" value="Add a new Price" onClick="window.location.reload()">
+
+    <script
+        src="http://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous"></script>
+
+    <script>
+        const url = "https://bitpay.com/api/rates"
+
+        //Grab elements from the DOM in an array (Nodelist) we are gonna call it for now elements
+        
+        const elements = []
+        class Bitcoin{
+            constructor(url,elements){
+                this.url = url
+                this.td = elements
+                this.getPrices(this.url, this.td)
+                this.refresh = this.refresh.bind(this)
+            }
+            setPrices(td){
+                //More stuff here that I need to add
+
+            }
+            getPrices(URL, td){
+                //console.log('Ready for get Prices')
+                $.ajax({
+                    url: URL,
+                    dataType: "json",
+                    success: (data) =>{
+                        this.prices = data
+                        console.log(this.prices = data)
+                        //some stuff
+                        this.setPrices(td, this.prices)
+
+                    },
+                    error: (error)=>{
+                        console.log("There was an error!!")
+                    }  
+                })
+            }
+            
+            refresh(){
+                this.getPrices()
+
+            }
+        }
+
+        let price = new Bitcoin(url, elements)
+        </script>
+</body>
+</html>
